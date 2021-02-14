@@ -1,6 +1,6 @@
 # 3D Rendered Tetris
 
-This game was made for my Computer Graphics (CSC 482) class.
+This game was made for my Computer Graphics (CSC 462) class.
 It is rendered in WebGL.
 
 Arrow keys control the pieces: 
