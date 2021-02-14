@@ -9,3 +9,5 @@ Arrow keys control the pieces:
     
 w,a,s,d,e,q - Move the playing field in the corresponding direction (X/Y/Z)
 W,A,S,D,E,Q - Rotate the playing field in the corresponding direction (X/Y/Z)
+
+Main code in rasterize.js
