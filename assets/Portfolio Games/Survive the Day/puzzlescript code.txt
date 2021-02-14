@@ -1,0 +1,459 @@
+title Survive the Day
+author McKenna Owens & Logan Hobbs
+homepage www.puzzlescript.net
+
+========
+OBJECTS
+========
+
+Background
+#002e7d
+
+CaveBacking
+#302559
+
+Trunk
+#574926 darkbrown
+.011.
+.101.
+.010.
+.110.
+.101.
+
+Branch
+#574926 darkbrown
+.011.
+1101.
+.0100
+1110.
+.101.
+
+Leaves
+#002e00 #284528
+00000
+10000
+00010
+00000
+01000
+
+Berries
+darkred red green
+.2.2.
+..2..
+.210.
+1001.
+01...
+
+PoisonBerries
+purple darkblue green
+.2.2.
+..2..
+.210.
+1001.
+01...
+
+Grass
+darkgreen #004d26
+11111
+01111
+11101
+11111
+10111
+
+Cave
+gray darkgray
+11111
+01111
+11101
+11111
+10111
+
+StalM
+gray darkgray
+.....
+..1..
+.101.
+.101.
+10101
+
+StalT
+gray darkgray
+10101
+.101.
+.101.
+..1..
+.....
+
+StalTmoving
+gray darkgray
+10101
+.101.
+.101.
+..1..
+.....
+
+
+WolfLeft
+gray darkgray black #303030
+..0..
+.31..
+2331.
+..331
+..3.3
+
+WolfRight
+gray darkgray black #303030
+..0..
+..13.
+.1332
+133..
+3.3..
+
+WolfSleep
+gray darkgray black #303030
+.....
+.....
+..01.
+1133.
+13332
+
+Shelter
+Brown Darkbrown #613900
+..0..
+.010.
+.010.
+02120
+02120
+
+PlayerGround
+Black Orange White Blue
+.000.
+.111.
+22222
+.333.
+.3.3.
+
+PlayerJump1
+Black Orange White Blue
+.000.
+.1112
+.222.
+2333.
+.3.3.
+
+PlayerJump2
+Black Orange White Blue
+.000.
+.1112
+.222.
+2333.
+.3.3.
+
+PlayerSitting
+Black Orange White Blue
+.....
+.000.
+.111.
+.222.
+23332
+
+PlayerDead
+Black Orange White Blue
+..2..
+33210
+.3210
+33210
+..2..
+
+PlayerDone
+Black Orange White Blue Black
+.000.
+.111.
+22222
+.333.
+.3.3.
+
+Metal
+#101010
+
+Blade
+#101010
+.....
+.....
+00000
+.....
+.....
+
+Savior
+#4f4a03 Orange Red Darkblue
+.000.
+.111.
+22222
+.333.
+.3.3.
+
+=======
+LEGEND
+=======
+
+Player = PlayerGround or PlayerJump1 or PlayerJump2 or PlayerSitting
+Wolf = WolfLeft or WolfRight
+Object = PlayerGround or Grass or Shelter or Wolf or Cave or StalT or StalTmoving
+JumpingPlayer = PlayerJump1 or PlayerJump2
+PlayerFin = PlayerSitting or PlayerDone
+Jumpable = PlayerGround or PlayerSitting
+Tree = Trunk or Leaves or Branch
+
+
+. = Background
+, = CaveBacking
+# = Grass
+- = Cave
+P = PlayerGround
+B = Berries
+X = PoisonBerries
+W = WolfLeft
+S = Shelter
+M = StalM
+T = StalT
+A = Savior
+H = Metal
+L = Blade
+U = Trunk
+E = Leaves
+R = Branch
+
+=======
+SOUNDS
+=======
+
+Berries destroy 80519503
+
+================
+COLLISIONLAYERS
+================
+
+Background
+CaveBacking, Tree
+Berries, PoisonBerries, WolfSleep, StalM, Metal, Blade, Shelter
+PlayerGround, PlayerJump1, PlayerJump2, PlayerSitting, PlayerDead, PlayerDone, Grass, Wolf, Cave, StalT, StalTmoving, Savior
+
+======
+RULES
+======
+(Death)
+[ action PlayerDead ] -> restart
+
+(Gravity)
+up [ up Jumpable | no Object ] -> [ up PlayerJump2 | ]
+down [ up JumpingPlayer | no Object ] -> [ JumpingPlayer | ]
+down [ up PlayerJump2 | no Object ] -> [ PlayerJump2 | ]
+horizontal [ > PlayerJump2 | no Object ] -> [ | PlayerJump1 ] again
+horizontal [ > PlayerJump1 | no Object ] -> [ | PlayerGround ] again
+random down [ PlayerGround | no Object ] -> [ | PlayerGround ] again
+late down [ JumpingPlayer | Object ] -> [ PlayerGround | Object ] again
+
+(Collect Berries)
+late [ Player Berries ] -> [ Player ]
+late [ Player PoisonBerries ] -> [ PlayerDead ] message You have died.	Press R to restart
+
+(Stop at Shelter)
+late horizontal[ Player | Shelter ] -> [ PlayerSitting | Shelter ]
+late [ Player Shelter ] -> [ PlayerSitting Shelter ]
+
+(Move leaving Shelter)
+horizontal [ PlayerSitting | no Shelter ] -> [ PlayerGround | ]
+
+(Wolf movement)
+left [ WolfLeft | no Object ] -> [ > WolfLeft | no Object ] (again)
+late left [ WolfLeft | Object ] -> [ WolfRight | Object ]
+right [ WolfRight | no Object ] -> [ > WolfRight | no Object ] (again)
+late right [ WolfRight | Object ] -> [ WolfLeft | Object ]
+up [ Wolf | Player ] -> [ WolfSleep Player | ] (too Mario-esque?)
+late left right [ Player | Wolf ] -> [ PlayerDead | Wolf ] message You have died.	Press R to restart
+
+(Stal)
+[ StalM Player ] -> [ StalM PlayerDead ] message You have died.	Press R to restart
+vertical [ StalT | ... | Player ] -> [ StalTmoving | ... | Player ]
+[ StalTmoving | no Object ] -> [ Down StalTmoving | no Object ]
+down [StalTmoving | Player ] -> [StalTmoving | PlayerDead ] message You have died.	Press R to restart
+
+(End Game)
+late [ Player | Savior ] -> [ PlayerDone | Savior ]
+
+==============
+WINCONDITIONS
+==============
+
+No Berries
+Some PlayerFin
+
+=======
+LEVELS
+=======
+
+message Day 1
+
+..eeeu..u...........
+.eeeereere..ee......
+.eeree.ere..eee.....
+..eu.u..u...ere.....
+...u.u..u....u......
+p..u.u..ub...u.....s
+####################
+
+message Day 2
+
+...eee..u.u...u.....
+..eeeee.u.u..eu..e..
+...ere.ereu.eereeee.
+.b..u...uer...u.ere.
+...#u...u.u...u..u..
+p.##u...ubu...u..u.s
+####################
+
+message Day 3
+
+...eee....ereeree...
+..eeeeee...u.eu.....
+...erere...u..u.....
+.b..u.ue...u..u.e...
+...#u.u....u..#ere..
+p.##u.u..b.uw##.u..s
+####################
+
+message Day 4
+
+eeee.eee..eee....u..
+eere.eree.eeee..ere.
+.eu..ere.eeree...u..
+.bu...u....u.....u..
+..u#..u....u.....u..
+p.##..u..x.u..s..u.b
+####################
+
+message Day 5
+
+................u...
+................u..s
+..e........u....u.##
+.eee.......uu...u###
+.eee....u..ur..b####
+eeree...r..uu.######
+..u.....uu.u########
+..u.....uu.#########
+..u.....uu##########
+p.u..b..############
+####################
+
+message Day 6
+
+..uu.......e........
+p.uu......eee.......
+#####....eeree......
+######....eue....e..
+#######....u....eee.
+####..e....u...eeeee
+##...eee..###...ere.
+#....ere.#####...u..
+......u..#######.u..
+s..#b.u.w########u.b
+####################
+
+message Day 7
+
+...................p
+.................---
+................----
+...............-----
+.................---
+...................-
+........m..---......
+.......---------....
+.....------------...
+s.m---------------.b
+--------------------
+
+message Day 8
+
+--------------------
+--------...tttt.....
+----................
+--..................
+-...................
+....................
+....................
+....................
+....................
+s.....b............p
+--------------------
+
+message Day 9
+
+--------------------
+--------------------
+------.t...ttt------
+--................--
+...................-
+....................
+s...................
+-------.............
+-------.............
+---------...m......p
+--------------------
+
+message Day 10
+
+--------------------
+s................---
+---------------...--
+----........----...-
+---............--..-
+--....m..m..m.....--
+-....---------------
+-...----ttt...tttt..
+-..--...............
+--..........m......p
+--------------------
+
+message Day 11
+
+..........eee.....r.
+....ee....ere.....u.
+..eeeee....u......##
+.eeeere....u..mb.#--
+.ereeu....####------
+.eu.eu...#----------
+..u..r..#--.....ttt.
+..r..##.............
+..u..###...r.......p
+s.u.x####..u..w##---
+################----
+
+message Day 12
+
+.................u..
+...........e.....r..
+..........eee...er..
+lll........u.....u..
+...........u..ee.r..
+h.........ere.erere.
+h..........uu.eu.u..
+ha.........uu..u.r..
+#########..uu..u.u..
+################.u.p
+####################
+
+message Congratulations! You've survived the wilderness, and made it back to society.
+
+
+(
+message Test Level
+
+....................
+#B.....B............
+######..............
+.......#............
+......##.....B.....#
+.P.B.###...W...X..S#
+####################

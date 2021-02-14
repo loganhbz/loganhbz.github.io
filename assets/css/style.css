@@ -150,25 +150,25 @@ padding:0px;
 
     #header h4 {
         line-height: 30px;
-        font-size: 12px;
+        font-size: 14px;
         padding-bottom: 40px;
         text-transform: uppercase;
     }
 
 /*================================
-    SERVICES STYLES
+    SKILLS STYLES
 ==================================*/
-#services {
+#skills {
     background-color: rgba(237, 237, 237, 1);
 }
 
-    #services i {
+    #skills i {
         font-size: 80px;
         padding: 30px;
         color: #FF2276;
     }
 
-    #services h4 {
+    #skills h4 {
         padding-bottom: 5px;
         padding-top: 15px;
     }
