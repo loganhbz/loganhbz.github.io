@@ -21,6 +21,7 @@ To get the “easiest” outcome - best chance of success
 * Continue, then choose “Middle” when asked what cave to go down. Here is hidden writing on the wall.
 * Continue until you see “Brace yourself”. This is the “bracing” mechanic, to save yourself from crashing your raft. Because of your metal resources, you will have a good chunk of time to get through the sandbar.
 * Continue to end
+
 Some nodes have several different possible text displays (if’s and else’s) based on what you have chosen in the past. Your path will affect whether you will live or die when pushing your raft out into the ocean. Not having enough materials will cause a death.
 Exploring the forest and choosing to pick the mushrooms starts a side story where you acquire a companion, which is referenced in later nodes.
 
