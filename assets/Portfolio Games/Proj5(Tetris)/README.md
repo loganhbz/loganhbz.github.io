@@ -12,4 +12,4 @@ W,A,S,D,E,Q - Rotate the playing field in the corresponding direction (X/Y/Z)
 
 Main code in rasterize.js
 
-RUN -> https://loganhbz.github.io/assets/Portfolio%20Games/Survive%20the%20Day/Survive%20the%20Day.html
+RUN -> https://loganhbz.github.io/assets/Portfolio%20Games/Proj5(Tetris)/index.html
