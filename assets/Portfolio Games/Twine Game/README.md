@@ -26,3 +26,5 @@ Some nodes have several different possible text displays (if’s and else’s) b
 Exploring the forest and choosing to pick the mushrooms starts a side story where you acquire a companion, which is referenced in later nodes.
 
 Picture acquired from: https://unsplash.com/ (royalty free image search engine) images have author name in /images
+
+RUN -> https://loganhbz.github.io/assets/Portfolio%20Games/Twine%20Game/Stranded.html
